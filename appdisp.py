@@ -21,6 +21,7 @@ disp = TFT.ST7735(
         max_speed_hz=SPEED_HZ))
 
 disp.begin()
+disp.clean()
 
 cap = cv2.VideoCapture(0)
 
@@ -29,12 +30,10 @@ print('Connetced camera')
 while True:
     success, frame = cap.read()
     if success:
-       # frame = cv2.resize(frame, (320, 640), interpolation=cv2.INTER_AREA)
-       # img_tmp = cv2.cvtColor(frame, cv2.COLOR_BGR2RBG)
-        image = Image.fromarray(frame)
-       # image = image.thumbnail((128,160))
-        image = image.rotate(90)
-        image = image.resize((217, 160))
-       # image = image.rotate(90)
+        frame = cv2.rotate(90).resize(frame, (217, 160), interpolation=cv2.INTER_AREA)
+        img_tmp = cv2.cvtColor(frame, cv2.COLOR_BGR2RBG)
+        image = Image.fromarray(img_tmp)
+        #image = image.rotate(90)
+        #image = image.resize((217, 160))
         image = image.crop((32,0,160,160))
         disp.display(image)
