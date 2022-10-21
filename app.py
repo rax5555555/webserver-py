@@ -1,16 +1,11 @@
 from flask import Flask, render_template, Response, request
 import cv2
-import serial
-import threading
 import time
 import json
 import argparse
 
 app = Flask(__name__)
 camera = cv2.VideoCapture(0)  # веб камера
-
-controlX, controlY = 0, 0  # глобальные переменные положения джойстика с web-страницы
-
 
 def getFramesGenerator():
     """ Генератор фреймов для вывода в веб-страницу, тут же можно поиграть с openCV"""
@@ -38,7 +33,6 @@ def index():
     return render_template('index.html')
 
 if __name__ == '__main__':
-
     parser = argparse.ArgumentParser()
     parser.add_argument('-p', '--port', type=int, default=5000, help="Running port")
     parser.add_argument("-i", "--ip", type=str, default='172.20.10.3', help="Ip address")
