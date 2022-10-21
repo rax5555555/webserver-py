@@ -1,6 +1,6 @@
-from PIL import Image
-import cv2
-import ST7735 as TFT
+from PIL import Image 
+import cv2 
+import ST7735 as TFT 
 import Adafruit_GPIO as GPIO
 import Adafruit_GPIO.SPI as SPI
 
@@ -22,15 +22,19 @@ disp = TFT.ST7735(
 
 disp.begin()
 
-cap = cv.VideoCapture(0)
+cap = cv2.VideoCapture(0)
 
 print('Connetced camera')
 
 while True:
     success, frame = cap.read()
     if success:
-        frame = cv2.resize(frame, (320, 240), interpolation=cv2.INTER_AREA)
-        img_tmp = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-        image = Image.fromarray(img_tmp)
-        image = image.rotate(90).resize((WIDTH, HEIGHT))
+       # frame = cv2.resize(frame, (320, 640), interpolation=cv2.INTER_AREA)
+       # img_tmp = cv2.cvtColor(frame, cv2.COLOR_BGR2RBG)
+        image = Image.fromarray(frame)
+       # image = image.thumbnail((128,160))
+        image = image.rotate(90)
+        image = image.resize((217, 160))
+       # image = image.rotate(90)
+        image = image.crop((32,0,160,160))
         disp.display(image)
