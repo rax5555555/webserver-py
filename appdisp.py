@@ -31,8 +31,12 @@ while True:
     success, frame = cap.read()
     if success:
         frame = cv2.rotate(90).resize(frame, (217, 160), interpolation=cv2.INTER_AREA)
-        img_tmp = cv2.cvtColor(frame, cv2.COLOR_BGR2RBG)
-        image = Image.fromarray(img_tmp)
+        img_tmp = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+        gray = cv2.cvtColor(img_tmp, cv2.COLOR_RGB2GRAY)
+        _, binary = cv2.threshold(gray, 225, 255, cv2.THRESH_BINARY_INV)
+        
+        #img_tmp = cv2.cvtColor(frame, cv2.COLOR_RBG2BGR)
+        image = Image.fromarray(binary)
         #image = image.rotate(90)
         #image = image.resize((217, 160))
         image = image.crop((32,0,160,160))
